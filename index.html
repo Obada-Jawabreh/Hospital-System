@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="form-section">
+            <h1>Patient Information Form</h1>
+            <form id="form">
+                <label for="fullname">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" >
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" >
+
+                <label for="datee">Date of Birth:</label>
+                <input type="date" id="datee" name="dob" >
+
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" >
+                    <option value="">Select...</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" >
+
+                <label for="diseases">Chronic Diseases:</label>
+                <select id="diseases" name="diseases" >
+                    <option value="">Select...</option>
+                    <option value="diabetes">Diabetes</option>
+                    <option value="hypertension">Hypertension</option>
+                    <option value="asthma">Asthma</option>
+                    <option value="heart_disease">Heart Disease</option>
+                </select>
+
+                <button type="submit">Submit</button>
+                <button type="button" id="clear-btn">Clear</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Hospital Management System</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+</html>
