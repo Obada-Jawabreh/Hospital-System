@@ -32,7 +32,7 @@ main {
     padding: 2rem;
 }
 
-.form-section {
+.form-section, .patients-section {
     background-color: #fff;
     padding: 2rem;
     border-radius: 10px;
@@ -71,6 +71,39 @@ form button {
 
 form button:hover {
     background-color: #1b5e20;
+}
+
+.patients-section {
+    margin-top: 2rem;
+    max-width: 1200px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.patient-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.patient-card h3 {
+    margin: 0;
+    margin-bottom: 0.5rem;
+    color: #2e7d32;
+}
+
+.patient-card p {
+    margin: 0.5rem 0;
 }
 
 footer {
