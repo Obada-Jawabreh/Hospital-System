@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital Management System</title>
+    <title>Hospital System</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,57 +19,65 @@
     </header>
     <main>
         <section class="form-section">
-            <h1>Patient Information Form</h1>
+            <h2>Patient Information Form</h2>
             <form id="patientForm">
-                <label for="fullname">Full Name:</label>
-                <input type="text" id="fullname" name="fullname" required>
-                <span class="error" id="fullnameError"></span>
+            <div class="form-group">
+                <label for="fname">Full Name:</label>
+                <input type="text" id="fname" name="fname" required>
+                <span class="error" id="fnameError"></span>
+            </div>
 
+            <div class="form-group">
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
                 <span class="error" id="passwordError"></span>
+            </div>
 
-                <label for="dob">Date of Birth:</label>
-                <input type="date" id="dob" name="dob" required>
-                <span class="error" id="dobError"></span>
-
+            <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
                 <span class="error" id="emailError"></span>
+            </div>
 
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+                
                 <label for="gender">Gender:</label>
                 <select id="gender" name="gender" required>
-                    <option value="">Select...</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
-
-                <label for="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required>
-                <span class="error" id="phoneError"></span>
-
-                <label for="diseases">Chronic Diseases:</label>
-                <select id="diseases" name="diseases" required>
-                    <option value="">Select...</option>
-                    <option value="diabetes">Diabetes</option>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="07********" required>
+                    <span class="error" id="phoneError"></span>
+                </div>
+                
+                <label for="chronicDiseases">Chronic Diseases:</label>
+                <select id="chronicDiseases" name="chronicDiseases" required>
+                    <option value="heartDisease">Heart Disease</option>
                     <option value="hypertension">Hypertension</option>
                     <option value="asthma">Asthma</option>
-                    <option value="heart_disease">Heart Disease</option>
+                    <option value="cancer">Cancer</option>
+                    <option value="none">None</option>
                 </select>
-
-                <button type="submit">Submit</button>
-                <button type="button" id="clearBtn">Clear All</button>
+                
+                <label for="imageUrl">Image URL:</label>
+                <input type="url" id="imageUrl" name="imageUrl">
+                
+                <button type="submit" id="submit">Submit</button>
             </form>
         </section>
         <section class="patients-section">
-            <h2>Registered Patients</h2>
+            <h2>Patients List</h2>
             <div id="patientsList"></div>
+            <button id="clearData">Clear All Data</button>
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 Hospital Management System</p>
+        <p>&copy; 2023 Hospital System</p>
     </footer>
-
     <script src="app.js"></script>
 </body>
 </html>

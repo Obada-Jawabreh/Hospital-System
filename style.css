@@ -1,31 +1,29 @@
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #e0f7f1;
+    background-color: #f4f4f4;
 }
 
 header {
-    background-color: #2e7d32;
-    color: #fff;
+    background-color: #333;
+    color: white;
     padding: 1rem 0;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
-    text-align: center;
 }
 
 nav ul li {
     display: inline;
-    margin: 0 1rem;
+    margin-right: 1rem;
 }
 
 nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
-    font-weight: bold;
 }
 
 main {
@@ -33,85 +31,64 @@ main {
 }
 
 .form-section, .patients-section {
-    background-color: #fff;
+    margin-bottom: 2rem;
+}
+
+form {
+    background-color: white;
     padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 2rem auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 form label {
     display: block;
     margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: #2e7d32;
 }
 
-form input, form select, form button {
+form input, form select {
     width: 100%;
-    padding: 0.75rem;
+    padding: 0.5rem;
     margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-form input:focus, form select:focus {
-    border-color: #2e7d32;
 }
 
 form button {
-    background-color: #2e7d32;
-    color: #fff;
+    padding: 0.5rem 1rem;
+    background-color: #333;
+    color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
 }
 
 form button:hover {
-    background-color: #1b5e20;
+    background-color: #555;
 }
 
 .patients-section {
-    margin-top: 2rem;
-    max-width: 1200px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .patient-card {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 10px;
+    border: 1px solid #ddd;
     padding: 1rem;
-    margin: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 30%;
-    box-sizing: border-box;
+    border-radius: 5px;
+    margin-bottom: 1rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
 }
 
-.patient-card h3 {
-    margin: 0;
-    margin-bottom: 0.5rem;
-    color: #2e7d32;
+.patient-card img {
+    border-radius: 50%;
+    margin-right: 1rem;
 }
-
-.patient-card p {
-    margin: 0.5rem 0;
-}
-
-footer {
-    text-align: center;
-    padding: 1rem 0;
-    background-color: #2e7d32;
-    color: #fff;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+.form-group {
+    margin-bottom: 15px;
+}        
+.error {
+    color: red;
+    font-size: 0.9em;
 }

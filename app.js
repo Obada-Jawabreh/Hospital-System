@@ -1,199 +1,136 @@
-document.getElementById('patientForm').addEventListener('submit', function(event) {
-  event.preventDefault();
-  if (validateForm()) {
-      render();
-  }
-});
+document.getElementById('submit').addEventListener('click', render);
+document.getElementById('clearData').addEventListener('click',clearData);
 
-document.getElementById('clearBtn').addEventListener('click', function() {
-  localStorage.removeItem('patients');
-  displayPatients();
-});
+function render(event) {
+    event.preventDefault();
 
-function validateForm() {
-  let isValid = true;
+    let fn = document.getElementById('fname').value;
+    let password = document.getElementById('password').value;
+    let email = document.getElementById('email').value;
+    let dob = document.getElementById('dob').value;
+    let gender = document.getElementById('gender').value;
+    let phone = document.getElementById('phone').value;
+    let chronicDiseases = document.getElementById('chronicDiseases').value;
+    let imageUrl = document.getElementById('imageUrl').value;
 
-  const fullname = document.getElementById("fullname").value;
-  const password = document.getElementById("password").value;
-  const dob = document.getElementById("dob").value;
-  const email = document.getElementById("email").value;
-  const phone = document.getElementById("phone").value;
+    const usernameRegex = /^[^\s]+$/;
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{9,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^07\d{8}$/;
 
-  const fullnameError = document.getElementById("fullnameError");
-  const passwordError = document.getElementById("passwordError");
-  const dobError = document.getElementById("dobError");
-  const emailError = document.getElementById("emailError");
-  const phoneError = document.getElementById("phoneError");
+    const fnameError = document.getElementById('fnameError');
+    const passwordError = document.getElementById('passwordError');
+    const emailError = document.getElementById('emailError');
+    const phoneError = document.getElementById('phoneError');
 
-  // Fullname validation: no spaces
-  if (/\s/.test(fullname)) {
-      fullnameError.textContent = "Full name should not contain spaces.";
-      fullnameError.style.display = "block";
-      isValid = false;
-  } else {
-      fullnameError.style.display = "none";
-  }
+    let isValid = true;
 
-  // Password validation
-  const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-  if (!passwordRegex.test(password)) {
-      passwordError.textContent = "Password must be at least 8 characters, include a number, an uppercase letter, and a special character.";
-      passwordError.style.display = "block";
-      isValid = false;
-  } else {
-      passwordError.style.display = "none";
-  }
+    if (!usernameRegex.test(fn)) {
+        fnameError.textContent = 'Full Name must not contain spaces.';
+        isValid = false;
+    } else {
+        fnameError.textContent = '';
+    }
 
-  // Date of birth validation: format YYYY-MM-DD
-  const dobRegex = /^\d{4}-\d{2}-\d{2}$/;
-  if (!dobRegex.test(dob)) {
-      dobError.textContent = "Date of birth must be in the format YYYY-MM-DD.";
-      dobError.style.display = "block";
-      isValid = false;
-  } else {
-      dobError.style.display = "none";
-  }
+    if (!passwordRegex.test(password)) {
+        passwordError.textContent = 'Password must be more than 8 characters long and contain at least one number, one uppercase letter, and one special character.';
+        isValid = false;
+    } else {
+        passwordError.textContent = '';
+    }
 
-  // Email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-      emailError.textContent = "Please enter a valid email address.";
-      emailError.style.display = "block";
-      isValid = false;
-  } else {
-      emailError.style.display = "none";
-  }
+    if (!emailRegex.test(email)) {
+        emailError.textContent = 'Please enter a valid email address.';
+        isValid = false;
+    } else {
+        emailError.textContent = '';
+    }
 
-  // Phone validation: 10 digits starting with 07
-  const phoneRegex = /^07\d{8}$/;
-  if (!phoneRegex.test(phone)) {
-      phoneError.textContent = "Phone number must be 10 digits starting with 07.";
-      phoneError.style.display = "block";
-      isValid = false;
-  } else {
-      phoneError.style.display = "none";
-  }
+    if (!phoneRegex.test(phone)) {
+        phoneError.textContent = 'Phone number must be 10 digits long and start with "07".';
+        isValid = false;
+    } else {
+        phoneError.textContent = '';
+    }
 
-  return isValid;
+    if (!isValid) return;
+
+    function Patient(name,password,email, dob, gender, phone, chronicDiseases, imageUrl) {
+        this.name = name;
+        this.password=password;
+        this.email=email;
+        this.dob = dob;
+        this.gender = gender;
+        this.phone = phone;
+        this.chronicDiseases = chronicDiseases;
+        this.imageUrl = imageUrl;
+    }
+
+    let patient = new Patient(fn,password,email, dob, gender, phone, chronicDiseases, imageUrl);
+
+    // Retrieve existing patients from local storage or initialize empty array
+    let patients = JSON.parse(localStorage.getItem('patients')) || [];
+    
+    patients.push(patient);
+    
+    localStorage.setItem('patients', JSON.stringify(patients));
+    
+    document.getElementById('patientForm').reset();
+    
+    renderPatients();
 }
 
-function render() {
-  const fullname = document.getElementById("fullname").value;
-  const password = document.getElementById("password").value;
-  const dob = document.getElementById("dob").value;
-  const email = document.getElementById("email").value;
-  const gender = document.getElementById("gender").value;
-  const phone = document.getElementById("phone").value;
-  const diseases = document.getElementById("diseases").value;
+function renderPatients() {
+    const patientsList = document.getElementById('patientsList');
+    const patients = JSON.parse(localStorage.getItem('patients')) || [];
+    console.log(patients);
+    patientsList.innerHTML = '';
 
-  const patients = JSON.parse(localStorage.getItem('patients')) || [];
+    patients.forEach(patient => {
+        const card = document.createElement('div');
+        card.className = 'patient-card';
 
-  const existingPatient = patients.find(patient => patient.email === email);
+        const img = document.createElement('img');
+        img.src = patient.imageUrl;
+        img.style.width = "300px";
+        img.style.height="200px";
+        img.alt = patient.name+patient.lastname + "s picture";
 
-  if (existingPatient) {
-      alert("A patient with this email already exists.");
-      return;
-  }
+        const info = document.createElement('div');
 
-  const newPatient = {
-      fullname,
-      password,
-      dob,
-      email,
-      gender,
-      phone,
-      diseases
-  };
+        const name = document.createElement('h3');
+        name.textContent = patient.name;
 
-  patients.push(newPatient);
-  localStorage.setItem('patients', JSON.stringify(patients));
+        const email = document.createElement('p');
+        email.textContent = "Email: " + patient.email;
 
-  displayPatients();
+        const dob = document.createElement('p');
+        dob.textContent = "Date of Birth:"+patient.dob;
+
+        const gender = document.createElement('p');
+        gender.textContent = "Gender:" + patient.gender;
+
+        const phone = document.createElement('p');
+        phone.textContent = "Phone: "+patient.phone;
+
+        const chronicDiseases = document.createElement('p');
+        chronicDiseases.textContent = "Chronic Diseases:" +patient.chronicDiseases;
+
+        info.appendChild(name);
+        info.appendChild(email);
+        info.appendChild(dob);
+        info.appendChild(gender);
+        info.appendChild(phone);
+        info.appendChild(chronicDiseases);
+
+        card.appendChild(img);
+        card.appendChild(info);
+
+        patientsList.appendChild(card);
+    });
 }
-
-function displayPatients() {
-  const patients = JSON.parse(localStorage.getItem('patients')) || [];
-  const patientsList = document.getElementById('patientsList');
-  patientsList.innerHTML = '';
-
-  patients.forEach(patient => {
-      const patientCard = document.createElement('div');
-      patientCard.className = 'patient-card';
-
-      patientCard.innerHTML = `
-          <h3>${patient.fullname}</h3>
-          <p><strong>Date of Birth:</strong> ${patient.dob}</p>
-          <p><strong>Gender:</strong> ${patient.gender}</p>
-          <p><strong>Phone Number:</strong> ${patient.phone}</p>
-          <p><strong>Chronic Diseases:</strong> ${patient.diseases}</p>
-      `;
-
-      patientsList.appendChild(patientCard);
-  });
+function clearData() {
+    localStorage.removeItem('patients');
+    renderPatients();
 }
-
-document.addEventListener('DOMContentLoaded', displayPatients);
-
-
-
-//     const clearBtn = document.getElementById('clear-btn');
-//     clearBtn.addEventListener("click",cleare);
-
-//     document.getElementById('form').addEventListener('submit', function(event) {
-//         event.preventDefault();
-//         render();
-//     });
-// function render(){
-//   let fullname=document.getElementById("fullname").value;
-//   let password=document.getElementById("password").value;
-//   let datee=document.getElementById("datee").value;
-//   let gender=document.getElementById("gender").value;
-//   let phone=document.getElementById("phone").value;
-//   let diseases=document.getElementById("diseases").value;
-
-
-//   function Patients (fullname,password,datee,gender,phone,diseases){
-//     this.fullname=fullname;
-//     this.password=password;
-//     this.datee=datee;
-//     this.gender=gender;
-//     this.phone=phone;
-//     this.diseases=diseases;
-//   }
-
-//   let newPatient = new Patients(fullname, password, datee, gender, phone, diseases);
-
-//   let Patient = JSON.parse(localStorage.getItem("Patient")) || [];
-//   Patient.push(newPatient);
-//   localStorage.setItem("pationt",JSON.stringify(Patient));
-//    cards ();
-//     // let arr=[fullname,password,datee,gender,phone,diseases];
-//     // localStorage.setItem("user data", JSON.stringify(arr));
-//   }
-  
-//   function cards (){
-//     let patient = JSON.parse(localStorage.getItem('patient')) || [];
-//     let patientsList = document.getElementById('patientsList');
-//     patientsList.innerHTML = '';
-
-//     patient.forEach(patien => {
-//         let patientCard = document.createElement('div');
-//         patientCard.className = 'patient-card';
-
-//         patientCard.innerHTML = `
-//             <h3>${patien.fullname}</h3>
-//             <p><strong>Date of Birth:</strong> ${patien.datee}</p>
-//             <p><strong>Gender:</strong> ${patien.gender}</p>
-//             <p><strong>Phone Number:</strong> ${patien.phone}</p>
-//             <p><strong>Chronic Diseases:</strong> ${patien.diseases}</p>
-//         `;
-
-//         patientsList.appendChild(patientCard);
-//     });
-//   }
-  
-  
-//   function cleare(arr){
-//   localStorage.clear();
-// }
-
+renderPatients();
